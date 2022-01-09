@@ -133,7 +133,7 @@ function sphereStepChange() {
 }
 
 /* 实时渲染 */
-function renderScene() {
+function renderMain() {
   stats.update();
 
   // 方块修改弧度
@@ -145,7 +145,7 @@ function renderScene() {
   sphereStepChange();
   orbitControls.update();
   renderer.render(scene, camera);
-  requestAnimationFrame(renderScene);
+  requestAnimationFrame(renderMain);
 }
 
-renderScene();
+renderMain();
