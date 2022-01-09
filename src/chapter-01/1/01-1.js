@@ -102,8 +102,6 @@ document.body.appendChild(stats.dom);
 /* render */
 document.getElementById('app').appendChild(renderer.domElement);
 
-cube.rotation.x += 2 * Math.PI;
-
 /* dat.GUI */
 const controls = new function () {
   this.rotationSpeed = 0.02;
