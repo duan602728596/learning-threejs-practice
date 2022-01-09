@@ -1,25 +1,31 @@
+import { promisify } from 'node:util';
 import { join, parse } from 'node:path';
 import { defineConfig } from 'vite';
 import glob from 'glob';
 
-const src = join(__dirname, 'src');
-const html = glob.sync('**/*.html', {
-  root: src
-});
+const globPromise = promisify(glob);
 
-export default defineConfig({
-  root: src,
-  build: {
-    rollupOptions: {
-      input: html.reduce((result, h) => {
-        result[parse(h).name] = join(__dirname, h);
+export default defineConfig(async function() {
+  const src = join(__dirname, 'src');
+  const html = await globPromise('**/*.html', {
+    root: src
+  });
+  const htmlInput = html.reduce((result, h) => {
+    result[parse(h).name] = join(__dirname, h);
 
-        return result;
-      }, {})
+    return result;
+  }, {});
+
+  return {
+    root: src,
+    build: {
+      rollupOptions: {
+        input: htmlInput
+      },
+      outDir: join(__dirname, 'dist')
     },
-    outDir: join(__dirname, 'dist')
-  },
-  server: {
-    port: 5052
-  }
+    server: {
+      port: 5052
+    }
+  };
 });
