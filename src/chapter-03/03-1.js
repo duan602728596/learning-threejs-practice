@@ -9,7 +9,9 @@ import {
   Mesh,
   PlaneGeometry,
   AmbientLight,
-  SpotLight
+  SpotLight,
+  CameraHelper,
+  SpotLightHelper
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Stats from 'three/examples/jsm/libs/stats.module';
@@ -79,7 +81,7 @@ plane.receiveShadow = true; // 动态阴影
 scene.add(plane);
 
 /* 光源 */
-// 平行光
+// 环境光
 const ambientLight = new AmbientLight(0x606008);
 
 scene.add(ambientLight);
@@ -92,11 +94,19 @@ spotLight.castShadow = true;
 spotLight.shadow.camera.near = 1;
 spotLight.shadow.camera.far = 100;
 spotLight.shadow.camera.fov = 120;
-spotLight.target = plane;
+spotLight.target = sphere;
 spotLight.distance = 0; // 衰减
-spotLight.angle = 0.5;  // 聚光灯的最大范围，以弧度为单位，从其方向
+spotLight.angle = 0.4;  // 聚光灯的最大范围，以弧度为单位，从其方向
 
 scene.add(spotLight);
+
+const spotLightHelper = new SpotLightHelper(spotLight);
+
+scene.add(spotLightHelper);
+
+const spotLightCameraHelper = new CameraHelper(spotLight.shadow.camera);
+
+scene.add(spotLightCameraHelper);
 
 /* GUI */
 const controls = new function () {
@@ -119,6 +129,8 @@ gui.add(controls, 'disableSpotlight').onChange((e) => ambientLight.visible = !e)
 function renderMain() {
   stats.update();
   orbitControls.update();
+  spotLightHelper.update();
+  spotLightCameraHelper.update();
   renderer.render(scene, camera);
   requestAnimationFrame(renderMain);
 }
