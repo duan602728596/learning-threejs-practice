@@ -7,7 +7,9 @@ import {
   SphereGeometry,
   MeshLambertMaterial,
   Mesh,
-  AmbientLight
+  PlaneGeometry,
+  AmbientLight,
+  SpotLight
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Stats from 'three/examples/jsm/libs/stats.module';
@@ -62,31 +64,56 @@ const sphereMaterial = new MeshLambertMaterial({
 });
 const sphere = new Mesh(sphereGeometry, sphereMaterial);
 
-sphere.position.set(0, 0, 0);
+sphere.position.set(0, 10, 0);
 sphere.castShadow = true;
 scene.add(sphere);
 
-/* 光源 */
-const light = new AmbientLight(0x606008);
+/* plane */
+const planeGeometry = new PlaneGeometry(60, 40, 1, 1);
+const planeMaterial = new MeshLambertMaterial({ color: 0xaaaaaa * 0.4 });
+const plane = new Mesh(planeGeometry, planeMaterial);
 
-scene.add(light);
+plane.rotation.x = -0.5 * Math.PI;
+plane.position.set(0, 0, 0);
+plane.receiveShadow = true; // 动态阴影
+scene.add(plane);
+
+/* 光源 */
+// 平行光
+const ambientLight = new AmbientLight(0x606008);
+
+scene.add(ambientLight);
+
+// 聚光灯
+const spotLight = new SpotLight(0xffffff);
+
+spotLight.position.set(0, 60, 30);
+spotLight.castShadow = true;
+spotLight.shadow.camera.near = 1;
+spotLight.shadow.camera.far = 100;
+spotLight.shadow.camera.fov = 120;
+spotLight.target = plane;
+spotLight.distance = 0; // 衰减
+spotLight.angle = 0.5;  // 聚光灯的最大范围，以弧度为单位，从其方向
+
+scene.add(spotLight);
 
 /* GUI */
 const controls = new function () {
-  this.intensity = light.intensity;
-  this.ambientColor = light.color.getStyle();
+  this.intensity = ambientLight.intensity;
+  this.ambientColor = ambientLight.color.getStyle();
   this.disableSpotlight = false;
 };
 const gui = new GUI();
 
 function handleGuiControlsChange (e) {
-  light.color = new Color(controls.ambientColor);
-  light.intensity = controls.intensity;
+  ambientLight.color = new Color(controls.ambientColor);
+  ambientLight.intensity = controls.intensity;
 }
 
 gui.add(controls, 'intensity', 0, 3, 0.1).onChange(handleGuiControlsChange);
 gui.addColor(controls, 'ambientColor').onChange(handleGuiControlsChange);
-gui.add(controls, 'disableSpotlight').onChange((e) => light.visible = !e);
+gui.add(controls, 'disableSpotlight').onChange((e) => ambientLight.visible = !e);
 
 /* 实时渲染 */
 function renderMain() {
