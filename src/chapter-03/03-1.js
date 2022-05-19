@@ -58,7 +58,7 @@ document.body.appendChild(stats.dom);
 /* render */
 document.getElementById('app').appendChild(renderer.domElement);
 
-/* sphere */
+/* 球体 */
 const sphereGeometry = new SphereGeometry(4, 20, 20);
 const sphereMaterial = new MeshLambertMaterial({
   color: 0xffffff,
