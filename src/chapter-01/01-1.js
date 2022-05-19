@@ -47,7 +47,7 @@ const axesHelper = new AxesHelper(20);
 
 scene.add(axesHelper);
 
-/* plane */
+/* 四边形 */
 const planeGeometry = new PlaneGeometry(60, 20);
 const planeMaterial = new MeshLambertMaterial({
   color: 0xaaaaaa
@@ -59,7 +59,7 @@ plane.position.set(15, 0, 0);
 plane.receiveShadow = true;
 scene.add(plane);
 
-/* cube */
+/* 四面体 */
 const cubeGeometry = new BoxGeometry(4, 4, 4);
 const cubeMaterial = new MeshLambertMaterial({
   color: 0xff0000,
@@ -71,7 +71,7 @@ cube.position.set(-4, 3, 0);
 cube.castShadow = true;
 scene.add(cube);
 
-/* sphere */
+/* 球体 */
 const sphereGeometry = new SphereGeometry(4, 20, 20);
 const sphereMaterial = new MeshLambertMaterial({
   color: 0x7777ff,

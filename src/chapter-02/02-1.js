@@ -47,7 +47,7 @@ const axesHelper = new AxesHelper(20);
 
 scene.add(axesHelper);
 
-/* plane */
+/* 四边形 */
 const planeGeometry = new PlaneGeometry(60, 40, 1, 1);
 const planeMaterial = new MeshLambertMaterial({ color: 0xaaaaaa * 0.4 });
 const plane = new Mesh(planeGeometry, planeMaterial);
@@ -62,7 +62,7 @@ const ambientLight = new AmbientLight({ color: 0x3c3c3c });
 
 scene.add(ambientLight);
 
-/* spotLight */
+/* 聚光灯 */
 const spotLight = new SpotLight(0xffffff, 1.2, 150, 120);
 
 spotLight.position.set(-40, 60, -10);

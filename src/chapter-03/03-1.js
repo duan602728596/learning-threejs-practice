@@ -70,7 +70,7 @@ sphere.position.set(0, 10, 0);
 sphere.castShadow = true;
 scene.add(sphere);
 
-/* plane */
+/* 四边形 */
 const planeGeometry = new PlaneGeometry(60, 40, 1, 1);
 const planeMaterial = new MeshLambertMaterial({ color: 0xaaaaaa * 0.4 });
 const plane = new Mesh(planeGeometry, planeMaterial);

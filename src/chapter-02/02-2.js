@@ -55,7 +55,7 @@ const axesHelper = new AxesHelper(20);
 
 scene.add(axesHelper);
 
-/* plane */
+/* 四边形 */
 const planeGeometry = new PlaneGeometry(60, 40, 1, 1);
 const planeMaterial = new MeshLambertMaterial({ color: 0xaaaaaa * 0.4 });
 const plane = new Mesh(planeGeometry, planeMaterial);
@@ -86,7 +86,7 @@ geom.computeVertexNormals();
 const geomMaterial = new MeshBasicMaterial({
   color: 0xff0000,
   side: DoubleSide,
-  wireframe: true
+  wireframe: true // 渲染为线条
 });
 const geomMesh = new Mesh(geom, geomMaterial);
 
@@ -94,12 +94,12 @@ geomMesh.position.set(0, 0, 0);
 geomMesh.castShadow = true;
 scene.add(geomMesh);
 
-/* ambientLight */
+/* 环境光 */
 const ambientLight = new AmbientLight({ color: 0x3c3c3c });
 
 scene.add(ambientLight);
 
-/* spotLight */
+/* 聚光灯 */
 const spotLight = new SpotLight(0xffffff, 1.2, 150, 120);
 
 spotLight.position.set(-40, 60, -10);
