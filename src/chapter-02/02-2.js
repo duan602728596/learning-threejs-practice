@@ -33,6 +33,7 @@ const renderer = new WebGLRenderer(); // 渲染器
 renderer.setClearColor(new Color(0x000000));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
+document.getElementById('app').appendChild(renderer.domElement);
 
 // camera.position.set(-30, 40, 30);
 camera.position.set(120, 60, 80);
@@ -40,7 +41,12 @@ camera.lookAt(scene.position);
 scene.add(camera);
 
 function handleWindowResize(event) {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  Object.assign(camera, {
+    left: window.innerWidth / -16,
+    right: window.innerWidth / 16,
+    top: window.innerHeight / 16,
+    bottom: window.innerHeight / -16,
+  });
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
@@ -111,9 +117,6 @@ const stats = new Stats();
 
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
-
-/* render */
-document.getElementById('app').appendChild(renderer.domElement);
 
 /* 实时渲染 */
 function renderMain() {

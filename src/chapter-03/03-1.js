@@ -26,6 +26,7 @@ const renderer = new WebGLRenderer();
 renderer.setClearColor(new Color(0x000000));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
+document.getElementById('app').appendChild(renderer.domElement);
 
 /* 相机相关 */
 const camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1_000); // 相机
@@ -54,9 +55,6 @@ const stats = new Stats();
 
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
-
-/* render */
-document.getElementById('app').appendChild(renderer.domElement);
 
 /* 球体 */
 const sphereGeometry = new SphereGeometry(4, 20, 20);

@@ -26,6 +26,7 @@ scene.fog = new Fog(0xffffff, 0.015, 100); // 雾化效果
 renderer.setClearColor(new Color(0x000000));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
+document.getElementById('app').appendChild(renderer.domElement);
 
 camera.position.set(-30, 40, 30);
 camera.lookAt(scene.position);
@@ -74,9 +75,6 @@ const stats = new Stats();
 
 stats.showPanel(0);
 document.body.appendChild(stats.dom);
-
-/* render */
-document.getElementById('app').appendChild(renderer.domElement);
 
 /* dat.GUI */
 const controls = new function () {
