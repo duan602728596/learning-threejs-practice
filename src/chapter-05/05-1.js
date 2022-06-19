@@ -7,9 +7,15 @@ import {
   MeshBasicMaterial, // 基础材质
   DoubleSide,
   Mesh,
-  PlaneGeometry,  // 二维几何体
-  CircleGeometry, // 圆
-  RingGeometry,   // 圆弧
+  PlaneGeometry,     // 二维几何体
+  CircleGeometry,    // 圆
+  RingGeometry,      // 圆弧
+  BoxGeometry,       // 长方体
+  SphereGeometry,    // 三位球体
+  CylinderGeometry,  // 圆柱体
+  ConeGeometry,      // 圆锥体
+  TorusGeometry,     // 甜甜圈形状
+  TorusKnotGeometry, // 环状纽结
   Shape,
   Path,
   Vector2,
@@ -42,7 +48,7 @@ const scene = new Scene();
 /* 相机 */
 const camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 200);
 
-camera.position.set(10, 10, 10); // 红x绿y蓝z
+camera.position.set(30, 30, 30); // 红x绿y蓝z
 camera.lookAt(scene.position);
 
 /* 渲染器 */
@@ -96,6 +102,14 @@ function createMesh(geometry, position) {
 createMesh(new PlaneGeometry(2, 2, 3, 3), [0, 0, 0]); // 二维几何体
 createMesh(new CircleGeometry(1, 30), [3, 0, 0]); // 圆
 createMesh(new RingGeometry(0.5, 1, 30, 3), [6, 0, 0]); // 圆弧
+createMesh(new BoxGeometry(3,2,1), [0, 0, 3]); // 长方体
+createMesh(new SphereGeometry(1, 10, 10), [3, 0, 3]); // 球体
+createMesh(new CylinderGeometry(0.5, 1, 1, 15, 5), [6, 0, 3]); // 圆柱体
+createMesh(new ConeGeometry(1, 1, 5, 3), [9, 0, 3]); // 圆锥体
+createMesh(new TorusGeometry(1, 0.3, 20, 30), [0, 0, 6]); // 甜甜圈
+createMesh(new TorusKnotGeometry(1, 0.1, 20, 30, 4, 3), [3, 0, 6]); // 纽结
+
+// 自定义图形
 createMesh(new ShapeGeometry((() => {
   const shape = new Shape();
 
@@ -113,7 +127,7 @@ createMesh(new ShapeGeometry((() => {
   shape.holes.push(...hole);
 
   return shape;
-})()), [0, 0, 0]); // 自定义图形
+})()), [0, 0, 0]);
 
 /* 实时渲染 */
 function renderMain() {
